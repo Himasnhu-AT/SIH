@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-`
 </head>
 
 <body>
@@ -31,10 +30,10 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active ps-3" aria-current="page" href="\index.html">Home</a>
+                        <a class="nav-link active ps-3" aria-current="page" href="../index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ps-4" href="\about-us.html">About Us</a>
+                        <a class="nav-link ps-4" href="../about-us.html">About Us</a>
                     </li>
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle ps-4" href="#" role="button" data-bs-toggle="dropdown"
@@ -87,10 +86,10 @@
                         </ul>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link ps-4" href="\map.html">Track Us</a>
+                        <a class="nav-link ps-4" href="../map.html">Track Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ps-4" href="\signin.html">Sign In</a>
+                        <a class="nav-link ps-4" href="../signin.html">Sign In</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -121,8 +120,8 @@
                 <div class="credits-info">
                     <ul id="user-credits">
                         <!-- <li>5 pts - phone</li>
-                        <li>3 pts - wire</li>
-                        <li>7 pts - phone</li>
+                        <li>3 pts - wire</li> -->
+                        <!-- <li>7 pts - phone</li>
                         <li>2 pts mobile</li>
                         <li>8 pts - lapi</li>
                         <li>6 pts-boarde</li>
@@ -151,7 +150,7 @@
                 </div>
                 <div class="row">
                     <div class="col grid-item history">
-                        <form action="" id="form">
+                        <!-- <form action="" id="form">
                             <div class="heading">E-Waste Pickup Form</div>
                             <div class="pickup">
                                 <label for="pickup">PickUp Location</label><br>
@@ -173,16 +172,36 @@
                             <div class="form-group">
                                 <button type="button" onclick="calculateCredits()">Calculate Credits</button>
                             </div>
-                        </form>
+                        </form> -->
+                        <h1>You want to dump your E-Waste?</h1>
+                        <button id="forwardButton">Dump Here</button>
+
+
                         <div id="credit-result"></div>
+                        <div class="form-group" id="submit-button">
+                            <button onclick="UpdateSoldItem()" class="btn btn-primary" disabled>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </body>
 <script>
+    
+    // Get the button element by its id
+    const forwardButton = document.getElementById('forwardButton');
+
+    // Add a click event listener to the button
+    forwardButton.addEventListener('click', function () {
+        // Set the new page URL here
+        const newPageURL = "form.html";
+
+        // Redirect the user to the new page
+        window.location.href = newPageURL;
+    });
+
+
     async function checkLoggedIn() {
         const token = getCookie("_id");
         if (!token) {
@@ -207,14 +226,27 @@
             document.getElementById("user-phone").textContent = user.phoneNumber;
             document.getElementById("user-address").textContent = user.address;
             document.getElementById("user-email").textContent = user.email;
-            document.getElementById("user-credits-total").textContent = user.credits;
+            // document.getElementById("user-credits-total").textContent = user.credits;
 
-            const creditsList = document.getElementById("user-credits");
-            user.itemsSold.forEach(item => {
-                const listItem = document.createElement("li");
-                listItem.textContent = item;
-                creditsList.appendChild(listItem);
+            const testData = [
+
+                { label: "E-waste Given:", value: ["5 pts - phone", "3 pts - wire", "7 pts - phone", "2 pts mobile", "8 pts - lapi", "4 pts microwave", "6 pts boarde"] },
+
+
+            ];
+
+            const dynamicFieldsContainer = document.getElementById('user-credits');
+
+            testData.forEach(field => {
+                const fieldElement = document.createElement('div');
+                fieldElement.classList.add('dashboard-item');
+                fieldElement.innerHTML = `<label>${field.label}</label>`;
+                field.value.forEach(item => {
+                    fieldElement.innerHTML += `<p>${item}</p>`;
+                });
+                dynamicFieldsContainer.appendChild(fieldElement);
             });
+
         }
     }
 
@@ -232,26 +264,20 @@
 
     window.onload = checkLoggedIn;
 
-    // create array called test data
-    const testData = [
-        { name: "iPhone 11", category: "phone", credits: 50 },
-        { name: "Samsung Galaxy S10", category: "phone", credits: 40 },
-        { name: "iPhone 12", category: "phone", credits: 25 },
-    ]
+    let credit = 35;
 
     function calculateCredits() {
         const category = document.getElementById('category').value.toLowerCase();
         const model = document.getElementById('model').value;
 
-        var credits = 0;
+        let credits = 0;
         switch (category) {
             case 'phone':
                 if (model === 'iPhone 11') {
                     credits = 50;
                 } else if (model === 'Samsung Galaxy S10') {
                     credits = 40;
-                }
-                else {
+                } else {
                     credits = 25;
                 }
                 break;
@@ -281,10 +307,73 @@
         // Display the calculated credits to the user
         const creditResult = document.getElementById('credit-result');
         creditResult.innerHTML = `<p>Credits Earned: ${credits} credits</p>`;
+
+        // Enable or disable the submit button based on credits
+        const submitButton = document.getElementById('submit-button');
+        const submitBtn = document.querySelector('#submit-button button');
+
+        if (credits > 0) {
+            submitBtn.removeAttribute('disabled');
+        } else {
+            submitBtn.setAttribute('disabled', 'disabled');
+        }
+    }
+    document.getElementById("user-credits-total").textContent = credit;
+    function UpdateSoldItem() {
+        // Get the selected category and model
+        const category = document.getElementById('category').value.toLowerCase();
+        const model = document.getElementById('model').value;
+
+        // Calculate credits based on the category and model
+        let credits = 0;
+        switch (category) {
+            case 'phone':
+                if (model === 'iPhone 11') {
+                    credits = 50;
+                } else if (model === 'Samsung Galaxy S10') {
+                    credits = 40;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'laptop':
+                if (model === 'MacBook Air') {
+                    credits = 100;
+                } else if (model === 'Dell XPS 13') {
+                    credits = 80;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'tablet':
+                if (model === 'iPad Pro') {
+                    credits = 30;
+                } else if (model === 'Samsung Galaxy Tab S7') {
+                    credits = 25;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'other':
+                credits = 25;
+                break;
+        }
+
+        credit = credit + credits;
+        document.getElementById("user-credits-total").textContent = credit;
+
+        // Create a new list item element
+        const listItem = document.createElement('li');
+        listItem.textContent = `${credits} pts - ${category}`;
+
+        // Append the new list item to the user-credits
+        const userCredits = document.getElementById('user-credits');
+        userCredits.appendChild(listItem);
     }
 
+
 </script>
-    <script type="text/javascript" src="dist/script.js"></script>
+<script type="text/javascript" src="dist/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>

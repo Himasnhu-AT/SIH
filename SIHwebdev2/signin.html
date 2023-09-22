@@ -67,7 +67,7 @@
         .main input,
         .main select {
             width: 60%;
-            
+
             background: rgba(181, 223, 55, 1);
             color: white;
 
@@ -145,8 +145,9 @@
             top: 0;
             width: 100%;
             left: 0;
-        } 
-        .usertype{
+        }
+
+        .usertype {
             width: 60%;
             background: rgba(181, 223, 55, 1);
             color: white;
@@ -256,7 +257,7 @@
                     <option value="company">Company</option>
                     <option value="company">Pick Up Man</option>
                 </select>
-                
+
                 <input type="text" id="signup-username" name="txt" placeholder="User name" required="">
                 <input type="email" id="signup-email" name="email" placeholder="Email" required="">
                 <input type="password" id="signup-password" name="pswd" placeholder="Password" required="">
@@ -280,6 +281,19 @@
 </body>
 
 <script>
+    try {
+        window.onload = checkToken();
+        function checkToken() {
+            const token = getCookie("_id");
+            console.log(token);
+            if (token) {
+                window.location.href = "./dashboard/dashboard.html";
+                return;
+            }
+        }
+    } catch (err) {
+        console.log("No cookie found")
+    };
     // Function to send a POST request to the sign-up API
     async function signUp() {
         const signupForm = document.getElementById("signup-form");
@@ -377,11 +391,13 @@
         e.preventDefault();
         login();
     });
+
+
 </script>
 <script type="text/javascript" src="dist/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<script src="bootstrap.js"></script>
 
 </html>
