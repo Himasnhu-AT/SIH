@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 // IMPORTS FROM OTHER FILES
 const authRouter = require("./routes/auth");
 const ewasteFacilityRouter = require("./routes/ewaste_facility");
+const soldItemRouter = require("./routes/solditem");
+const pickupRouter = require("./routes/pickup");
 
 // INIT
 const PORT = process.env.PORT || 3000;
@@ -14,6 +16,8 @@ const DB = "mongodb+srv://him-at:him-at@cluster0.4yqsazk.mongodb.net/?retryWrite
 app.use(express.json());
 app.use(authRouter);
 app.use("/api/ewaste_facilities", ewasteFacilityRouter);
+app.use("/api/solditems", soldItemRouter);
+app.use("/api/pickups", pickupRouter);
 
 // Connections
 mongoose
