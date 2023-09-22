@@ -99,24 +99,28 @@
         <div class="row justify-content-center dashboard">
             <div class="col-4  grid-item information">
                 <div class="intro">
-                    <img src="user.png" id="user-img" alt="">Hello, User!</div>
+                    <img src="user.png" id="user-img" alt="">Hello, <span id="user-name">User</span>!
+                </div>
                 <button id="info-btn">Edit Profile</button>
                 <div class="line"></div>
                 <div class="personal">
-                    <div id="ph-no"><img src="phone.gif" class="icons" alt=""><b>Contact</b>: 9555496586</div>
-                    <div id="address"><img src="location.gif" class="icons" alt=""><b>Address</b>: NIT KKR</div>
-                    <div id="email"><img src="email.gif" class="icons" alt=""><b>E-Mail</b>: test@gamil.com</div>
+                    <div id="ph-no"><img src="phone.gif" class="icons" alt=""><b>Contact</b>: <span
+                            id="user-phone">9555496586</span></div>
+                    <div id="address"><img src="location.gif" class="icons" alt=""><b>Address</b>: <span
+                            id="user-address">NIT KKR</span></div>
+                    <div id="email"><img src="email.gif" class="icons" alt=""><b>E-Mail</b>: <span
+                            id="user-email">test@gmail.com</span></div>
                 </div>
                 <div class="line"></div>
                 <div class="credits-info">
-                    <ul>
-                        <li>5 pts - phone</li>
+                    <ul id="user-credits">
+                        <!-- <li>5 pts - phone</li>
                         <li>3 pts - wire</li>
                         <li>7 pts - phone</li>
                         <li>2 pts mobile</li>
                         <li>8 pts - lapi</li>
                         <li>6 pts-boarde</li>
-                        <li>4 pts microwave</li>
+                        <li>4 pts microwave</li> -->
                     </ul>
                 </div>
 
@@ -125,7 +129,7 @@
                 <div class="row">
                     <div class="col  grid-item">
                         <div class="credits">
-                            Credits Available : 999
+                            Credits Available : <span id="user-credits-total"></span>
                             <img src="" alt="">
                             <div id="credits-value"></div>
                         </div>
@@ -133,16 +137,19 @@
                 </div>
                 <div class="row">
                     <div class="col  grid-item">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24141.376662795246!2d76.80655409583561!3d29.939742319379437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390e3f51bab18cb5%3A0x96200205143e35f6!2sNIT%2C%20Thanesar%2C%20Haryana%20136119!5e0!3m2!1sen!2sin!4v1695323120016!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24141.376662795246!2d76.80655409583561!3d29.939742319379437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390e3f51bab18cb5%3A0x96200205143e35f6!2sNIT%2C%20Thanesar%2C%20Haryana%20136119!5e0!3m2!1sen!2sin!4v1695323120016!5m2!1sen!2sin"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col  grid-item history">
+                    <div class="col grid-item history">
                         <form action="" id="form">
                             <div class="heading">E-Waste Pickup Form</div>
                             <div class="pickup">
                                 <label for="pickup">PickUp Location</label><br>
-                            <input type="text" name="pickup" id="pickup">
+                                <input type="text" name="pickup" id="pickup">
                             </div>
                             <div class="category">
                                 <label for="category">Category</label><br>
@@ -157,7 +164,11 @@
                                 <label for="model">Model No.</label><br>
                                 <input type="text" name="model" id="model">
                             </div>
+                            <div class="form-group">
+                                <button type="button" onclick="calculateCredits()">Calculate Credits</button>
+                            </div>
                         </form>
+                        <div id="credit-result"></div>
                     </div>
                 </div>
             </div>
@@ -165,3 +176,84 @@
     </div>
     </div>
 </body>
+<script>
+
+    // Test data in JSON format
+    const testData = {
+        name: "John Doe",
+        phoneNumber: "9876543210",
+        address: "123 Main Street",
+        email: "john.doe@example.com",
+        credits: 99,
+        itemsSold: [
+            "9 pts - Phone",
+            "30 pts - Laptop",
+            "15 pts - Tablet",
+            "2 - Other"
+        ]
+    };
+
+    // Populate HTML elements with test data
+    document.getElementById("user-name").textContent = testData.name;
+    document.getElementById("user-phone").textContent = testData.phoneNumber;
+    document.getElementById("user-address").textContent = testData.address;
+    document.getElementById("user-email").textContent = testData.email;
+    document.getElementById("user-credits-total").textContent = testData.credits;
+
+
+    // Populate credits list
+    const creditsList = document.getElementById("user-credits");
+    testData.itemsSold.forEach(item => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${item}`;
+        creditsList.appendChild(listItem);
+    });
+
+    function calculateCredits() {
+        const category = document.getElementById('category').value.toLowerCase(); // Convert to lowercase
+        const model = document.getElementById('model').value;
+
+        var credits = 0;
+        switch (category) {
+            case 'phone':
+                if (model === 'iPhone 11') {
+                    credits = 50;
+                } else if (model === 'Samsung Galaxy S10') {
+                    credits = 40;
+                }
+                else {
+                    credits = 25;
+                }
+                break;
+            case 'laptop':
+                if (model === 'MacBook Air') {
+                    credits = 100;
+                } else if (model === 'Dell XPS 13') {
+                    credits = 80;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'tablet':
+                if (model === 'iPad Pro') {
+                    credits = 30;
+                } else if (model === 'Samsung Galaxy Tab S7') {
+                    credits = 25;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'other':
+                credits = 25;
+                break;
+        }
+
+        // Display the calculated credits to the user
+        const creditResult = document.getElementById('credit-result');
+        creditResult.innerHTML = `<p>Credits Earned: ${credits} credits</p>`;
+    }
+
+</script>
+</body>
+
+</html>
