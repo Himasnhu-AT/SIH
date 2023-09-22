@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+    
 </head>
 
 <body>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="row">
                     <div class="col grid-item history">
-                        <form action="" id="form">
+                        <!-- <form action="" id="form">
                             <div class="heading">E-Waste Pickup Form</div>
                             <div class="pickup">
                                 <label for="pickup">PickUp Location</label><br>
@@ -173,7 +173,11 @@
                             <div class="form-group">
                                 <button type="button" onclick="calculateCredits()">Calculate Credits</button>
                             </div>
-                        </form>
+                        </form> -->
+                        <h1>You want to dump your E-Waste?</h1>
+                        <button id="forwardButton">Dump Here</button>
+
+
                         <div id="credit-result"></div>
                         <div class="form-group" id="submit-button">
                             <button onclick="UpdateSoldItem()" class="btn btn-primary" disabled>Submit</button>
@@ -185,6 +189,20 @@
     </div>
 </body>
 <script>
+    
+    // Get the button element by its id
+    const forwardButton = document.getElementById('forwardButton');
+
+    // Add a click event listener to the button
+    forwardButton.addEventListener('click', function () {
+        // Set the new page URL here
+        const newPageURL = "form.html";
+
+        // Redirect the user to the new page
+        window.location.href = newPageURL;
+    });
+
+
     async function checkLoggedIn() {
         const token = getCookie("_id");
         if (!token) {
