@@ -134,11 +134,18 @@
         color: rgba(181, 223, 55, 1);
       }
 
+<<<<<<< HEAD
       .login input,
       .login button {
         background-color: #fff;
         color: rgba(181, 223, 55, 1);
       }
+=======
+        .login input,
+        .login button {
+            background-color: #fff;
+            color: #13cf3b;
+>>>>>>> b7949bff19b9fbaa5f2ad0e54c1a1a76d2c7c3f3
 
       #chk:checked ~ .login {
         transform: translateY(-500px);
@@ -181,6 +188,7 @@
 
   <body>
     <div class="navbar">
+<<<<<<< HEAD
       <nav class="navbar navbar-expand-lg sticky-top z-5" id="nav_id">
         <div class="container-fluid">
           <a class="navbar-brand link-light" href="#"
@@ -250,6 +258,55 @@
                   <!-- <li>
                                 <hr class="dropdown-divider">
                             </li> -->
+=======
+        <nav class="navbar navbar-expand-lg sticky-top z-5" id="nav_id">
+            <div class="container-fluid">
+                <a class="navbar-brand link-light" href="#"><img src="navicon.jpg" class="img-fluid" id="navimg"
+                        alt=""></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active ps-3" aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-4" href="#">About Us</a>
+                        </li>
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ps-4" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                EPR
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Notified EEE</a></li>
+                                <li><a class="dropdown-item" href="#">EPR Targets</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Authorised Producers</a></li>
+                            </ul>
+                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ps-4" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Guidelines
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- <li><a class="dropdown-item" href="">Final Guidelines on Implementation of E-Waste
+                                        Rules,2011</a></li>
+                                <li> -->
+                                <li><a class="dropdown-item"
+                                        href="https://www.cpcb.nic.in/displaypdf.php?id=UHJvamVjdHMvRS1XYXN0ZS9mdWxsLXRleHQucGRm"
+                                        target="_blank">Guidelines for Environmentally Sound Management of
+                                        Electronics Waste</a></li>
+                                <!-- <li>
+                                    <hr class="dropdown-divider">
+                                </li> -->
+>>>>>>> b7949bff19b9fbaa5f2ad0e54c1a1a76d2c7c3f3
 
                   <li>
                     <a
@@ -303,6 +360,7 @@
       </nav>
     </div>
     <div class="main">
+<<<<<<< HEAD
       <input type="checkbox" id="chk" aria-hidden="true" />
       <div class="signup">
         <form>
@@ -347,3 +405,128 @@
     
   </body>
 </html>
+=======
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="signup">
+            <form>
+                <label for="chk" aria-hidden="true">Sign Up</label>
+                <input type="text" id="signup-username" name="txt" placeholder="User name" required="">
+                <input type="email" id="signup-email" name="email" placeholder="Email" required="">
+                <input type="password" id="signup-password" name="pswd" placeholder="Password" required="">
+                <button id="signup-button">Sign Up</button>
+            </form>
+        </div>
+        <div class="login">
+            <form>
+                <label for="chk" aria-hidden="true">Login</label>
+                <input type="email" id="login-email" name="email" placeholder="Email" required="">
+                <input type="password" id="login-password" name="pswd" placeholder="Password" required="">
+                <button id="login-button">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Function to send a POST request to the sign-up API
+    async function signUp() {
+        const signupForm = document.getElementById("signup-form");
+        const name = document.getElementById("signup-username").value;
+        const email = document.getElementById("signup-email").value;
+        const password = document.getElementById("signup-password").value;
+
+        const response = await fetch("http://localhost:3000/api/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+            }),
+        });
+
+        const data = await response.json();
+        if (response.status === 200) {
+            const loginResponse = await fetch("http://localhost:3000/api/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+
+            const loginData = await loginResponse.json();
+            if (loginResponse.status === 200) {
+                // Login successful, store _id in a cookie
+                document.cookie = `_id=${loginData.token}`;
+                alert("Login successful!");
+
+                // Redirect to the dashboard after successful login
+                window.location.href = "./dashboard/dashboard.html";
+            } else {
+                alert("Login failed. Please check your credentials.");
+            }
+        } else {
+            alert("Sign-up failed. Please try again.");
+        }
+
+        // Clear the form
+        signupForm.reset();
+    }
+
+    // Function to send a POST request to the login API
+    async function login() {
+        const loginForm = document.getElementById("login-form");
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        const response = await fetch("http://localhost:3000/api/signin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        const data = await response.json();
+        if (response.status === 200) {
+            // Login successful, store _id in a cookie
+            document.cookie = `_id=${data.token}`;
+            alert("Login successful!");
+
+            // Redirect to the dashboard after successful login
+            window.location.href = "./dashboard/dashboard.html";
+        } else {
+            alert("Login failed. Please check your credentials.");
+        }
+
+        // Clear the form
+        loginForm.reset();
+    }
+
+    // Add event listeners to the sign-up and login forms
+    const signupButton = document.getElementById("signup-button");
+    const loginButton = document.getElementById("login-button");
+
+    signupButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        signUp();
+    });
+
+    loginButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        login();
+    });
+</script>
+
+
+</html>
+>>>>>>> b7949bff19b9fbaa5f2ad0e54c1a1a76d2c7c3f3
