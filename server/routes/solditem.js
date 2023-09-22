@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const SoldItem = require("../models/solditem.js");
+const SoldItem = require("../models/soldItem");
 
 router.get("/:userId", async (req, res) => {
   try {
@@ -18,7 +18,7 @@ router.post("/add", async (req, res) => {
   try {
     const { name, credit, userId } = req.body;
     
-    const newSoldItem = new SoldItem({ name, credit, userId });
+    const newSoldItem = new SoldItem({ name, credit, userId, model });
     
     await newSoldItem.save();
     

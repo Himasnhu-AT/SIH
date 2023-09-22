@@ -9,6 +9,10 @@ const soldItemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  model: {
+    type: String,
+    required: true,
+  },
   credit: {
     type: Number,
     required: true,
