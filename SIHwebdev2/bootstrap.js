@@ -56,13 +56,31 @@ window.onload = function() {
 };
 
 
-// TEST
-window.onscroll = function (e) {
-  if(window.scrollY>=190){
-    let i=0;
-    setInterval(()=>{
-      document.getElementById("in")
-    })
-  }
-};
-console.log(parseInt(123.321));
+//Data Increment
+
+const info1 = document.getElementById('info1');
+
+let i = 0;
+
+const info2 = document.getElementById('info2');
+
+let j = 0;
+
+function updateScrollCount() {
+    i++;
+    if (i < 79) {
+      info1.textContent = i;
+        requestAnimationFrame(updateScrollCount);
+    }
+    j++;
+    if (j < 51) {
+      info2.textContent = j;
+        requestAnimationFrame(updateScrollCount);
+    }    
+}    
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY >= 230) {
+        updateScrollCount();
+    }    
+});    
