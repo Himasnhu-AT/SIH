@@ -4,7 +4,7 @@
 
 > website pages
 
-- index.html
+- dashboard.html
 
 - other website assests...
 
