@@ -20,7 +20,11 @@
         src="https://www.bing.com/api/maps/mapcontrol?key=AsST48zDwzb75T1j4sSuV20U4KSbrLmHUZsBXCpu42U-sGOOZq4s49RwHlWXqggb&callback=initMap"
         async defer></script>
     <script src="scripts/map.js"></script>
-    
+    <style>
+        .choose{
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -105,9 +109,193 @@
         </div>
     </nav>
     <div id="map"></div>
-    <button onclick="showLocation(0)" id="location1" class="locations">Location 1</button>
+    <!-- <button onclick="showLocation(0)" id="location1" class="locations">Location 1</button>
     <button onclick="showLocation(1)" id="location2" class="locations">Location 2</button>
-    <button onclick="showLocation(2)" id="location3" class="locations">Location 3</button>
+    <button onclick="showLocation(2)" id="location3" class="locations">Location 3</button> 
+    <select> -->
+        <div class="chooselocation">
+            <h2>Select Your Option :</h2>
+            <select id="dropdown">
+                <option value="option1">Location 1</option>
+                <option value="option2">Location 2</option>
+                <option value="option3">Location 3</option>
+            </select>
+            <button onclick="showLocation(0)" id="location1" class="locations">Selected</button>
+        </div> 
+        
+
+    <!-- </select> -->
+    <div class="container">
+        <div class="row justify-content-evenly align-content-around" style="max-height: 10vh;">
+            <div class="col-2">
+                <img src="indianimage/Government_of_India_logo.svg" alt="" style="max-height: 10vh;">
+            </div>
+            <div class="col-2">
+                <img src="indianimage/swachhbharat.png" alt="" style="max-height: 10vh;">
+            </div>
+            <div class="col-2">
+                <img src="indianimage/G20_India_2023_logo.svg.png" alt="" style="max-height: 10vh;">
+            </div>
+            <div class="col-2">
+                <img src="indianimage/Ministry-of-Electronics-and-Information-Technology.webp" alt=""
+                    style="max-height: 10vh;">
+            </div>
+            <div class="col-2">
+                <img src="indianimage/digital-india.jpg" alt="" style="max-height: 9vh;">
+            </div>
+            <div class="col-2">
+                <img src="indianimage/make-in-india.png" alt="" style="max-height: 10vh;">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col bg-black text-center">
+                <h1>
+                    <a href="" class="typewrite " data-period="2000"
+                        data-type='[ "Thank you for choosing us.","Feel free to ask any queries.","if you like our work make sure to show us love.","We appreciate your time and hope to hear from you soon." ]'>
+                        <span class="wrap"></span>
+                    </a>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-white">
+        <div class="container p-4">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1 bg-primary" href="#!" role="button"><i
+                        class="bi bi-meta"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="bi bi-twitter-x"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1 bg-warning" href="#!" role="button"><i
+                        class="bi bi-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1 bg-danger" href="#!" role="button"><i
+                        class="bi bi-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1 bg-primary" href="#!" role="button"><i
+                        class="bi bi-linkedin"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="bi bi-github"></i></a>
+            </section>
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <!-- Section: Form -->
+
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p style="color:greenyellow; font-size: large;">
+                    Bharat eWaste Management Ltd. Provides comprehensive, complete and responsible recycling
+                    services.
+                </p>
+            </section>
+            <!-- Section: Text -->
+
+            <!-- Section: Links -->
+            <section class="">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0 " style="text-align: left;">
+                        <h5 class="text-uppercase">Services</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-white">ITAD</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">Electroic Recycling</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">Reverse Logistics</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">EPR Services</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0" style="text-align: left;">
+                        <h5 class="text-uppercase">Information</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-white">Who We Are</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">What We Do</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">Blogs</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-white">Features</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0" style="text-align: left;">
+                        <h5 class="text-uppercase">Our Office:</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <p class="text-white"><i class="bi bi-geo-alt-fill" style="color: red;"></i> Bharat
+                                    eWaste Management Ltd., NIT Kurukshetra Road, Haryana, India</p>
+                            </li>
+                            <li>
+                                <p class="text-white"><i class="bi bi-geo-alt-fill" style="color: red;"></i> Sector
+                                    23,
+                                    Golf Course Road, Gurugram, Haryana.</p>
+                            </li><br>
+                            <h5 class="text-uppercase">Contact Us</h5>
+                            <li>
+                                <p class="text-white"><i class="bi bi-telephone-fill" style="color: green;"></i>
+                                    1800-xx3-xx43</p>
+                            </li>
+                            <li>
+                                <p class="text-white"><i class="bi bi-envelope-fill" style="color: blue;"></i>
+                                    info@bharatewaste.com</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-1 mb-md-0">
+                        <!-- <h5 class="text-uppercase">Map</h5> -->
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32177.249161846874!2d76.79532856352961!3d29.94053772950007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390e3f422f5244e7%3A0x9c630c311d6349b8!2sNIT%20KURUKSHETRA!5e0!3m2!1sen!2sin!4v1695212981039!5m2!1sen!2sin"
+                            style="width: 100%;" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023 Copyright Bharat EWaste Management Ltd. All Rights Reserved
+            <a class="text-white" href="#">bharatewaste.com</a>
+        </div>
+
+        <!-- Copyright -->
+    </footer>
 </body>
 
 </html>
