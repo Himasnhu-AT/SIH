@@ -121,8 +121,8 @@
                 <div class="credits-info">
                     <ul id="user-credits">
                         <!-- <li>5 pts - phone</li>
-                        <li>3 pts - wire</li>
-                        <li>7 pts - phone</li>
+                        <li>3 pts - wire</li> -->
+                        <!-- <li>7 pts - phone</li>
                         <li>2 pts mobile</li>
                         <li>8 pts - lapi</li>
                         <li>6 pts-boarde</li>
@@ -179,11 +179,13 @@
 
 
                         <div id="credit-result"></div>
+                        <div class="form-group" id="submit-button">
+                            <button onclick="UpdateSoldItem()" class="btn btn-primary" disabled>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 <script>
@@ -225,14 +227,27 @@
             document.getElementById("user-phone").textContent = user.phoneNumber;
             document.getElementById("user-address").textContent = user.address;
             document.getElementById("user-email").textContent = user.email;
-            document.getElementById("user-credits-total").textContent = user.credits;
+            // document.getElementById("user-credits-total").textContent = user.credits;
 
-            const creditsList = document.getElementById("user-credits");
-            user.itemsSold.forEach(item => {
-                const listItem = document.createElement("li");
-                listItem.textContent = item;
-                creditsList.appendChild(listItem);
+            const testData = [
+
+                { label: "E-waste Given:", value: ["5 pts - phone", "3 pts - wire", "7 pts - phone", "2 pts mobile", "8 pts - lapi", "4 pts microwave", "6 pts boarde"] },
+
+
+            ];
+
+            const dynamicFieldsContainer = document.getElementById('user-credits');
+
+            testData.forEach(field => {
+                const fieldElement = document.createElement('div');
+                fieldElement.classList.add('dashboard-item');
+                fieldElement.innerHTML = `<label>${field.label}</label>`;
+                field.value.forEach(item => {
+                    fieldElement.innerHTML += `<p>${item}</p>`;
+                });
+                dynamicFieldsContainer.appendChild(fieldElement);
             });
+
         }
     }
 
@@ -250,26 +265,20 @@
 
     window.onload = checkLoggedIn;
 
-    // create array called test data
-    const testData = [
-        { name: "iPhone 11", category: "phone", credits: 50 },
-        { name: "Samsung Galaxy S10", category: "phone", credits: 40 },
-        { name: "iPhone 12", category: "phone", credits: 25 },
-    ]
+    let credit = 35;
 
     function calculateCredits() {
         const category = document.getElementById('category').value.toLowerCase();
         const model = document.getElementById('model').value;
 
-        var credits = 0;
+        let credits = 0;
         switch (category) {
             case 'phone':
                 if (model === 'iPhone 11') {
                     credits = 50;
                 } else if (model === 'Samsung Galaxy S10') {
                     credits = 40;
-                }
-                else {
+                } else {
                     credits = 25;
                 }
                 break;
@@ -299,7 +308,70 @@
         // Display the calculated credits to the user
         const creditResult = document.getElementById('credit-result');
         creditResult.innerHTML = `<p>Credits Earned: ${credits} credits</p>`;
+
+        // Enable or disable the submit button based on credits
+        const submitButton = document.getElementById('submit-button');
+        const submitBtn = document.querySelector('#submit-button button');
+
+        if (credits > 0) {
+            submitBtn.removeAttribute('disabled');
+        } else {
+            submitBtn.setAttribute('disabled', 'disabled');
+        }
     }
+    document.getElementById("user-credits-total").textContent = credit;
+    function UpdateSoldItem() {
+        // Get the selected category and model
+        const category = document.getElementById('category').value.toLowerCase();
+        const model = document.getElementById('model').value;
+
+        // Calculate credits based on the category and model
+        let credits = 0;
+        switch (category) {
+            case 'phone':
+                if (model === 'iPhone 11') {
+                    credits = 50;
+                } else if (model === 'Samsung Galaxy S10') {
+                    credits = 40;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'laptop':
+                if (model === 'MacBook Air') {
+                    credits = 100;
+                } else if (model === 'Dell XPS 13') {
+                    credits = 80;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'tablet':
+                if (model === 'iPad Pro') {
+                    credits = 30;
+                } else if (model === 'Samsung Galaxy Tab S7') {
+                    credits = 25;
+                } else {
+                    credits = 25;
+                }
+                break;
+            case 'other':
+                credits = 25;
+                break;
+        }
+
+        credit = credit + credits;
+        document.getElementById("user-credits-total").textContent = credit;
+
+        // Create a new list item element
+        const listItem = document.createElement('li');
+        listItem.textContent = `${credits} pts - ${category}`;
+
+        // Append the new list item to the user-credits
+        const userCredits = document.getElementById('user-credits');
+        userCredits.appendChild(listItem);
+    }
+
 
 </script>
 <script type="text/javascript" src="dist/script.js"></script>
