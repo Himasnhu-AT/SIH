@@ -183,40 +183,57 @@
     </div>
 </body>
 <script>
+    async function checkLoggedIn() {
+        const token = getCookie("_id");
+        if (!token) {
+            window.location.href = "../signin.html";
+            return;
+        }
 
-    // Test data in JSON format
-    const testData = {
-        name: "John Doe",
-        phoneNumber: "9876543210",
-        address: "123 Main Street",
-        email: "john.doe@example.com",
-        credits: 99,
-        itemsSold: [
-            "9 pts - Phone",
-            "30 pts - Laptop",
-            "15 pts - Tablet",
-            "2 - Other"
-        ]
-    };
+        const response = await fetch("http://localhost:3000/tokenIsValid", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth-token": token,
+            },
+        });
 
-    // Populate HTML elements with test data
-    document.getElementById("user-name").textContent = testData.name;
-    document.getElementById("user-phone").textContent = testData.phoneNumber;
-    document.getElementById("user-address").textContent = testData.address;
-    document.getElementById("user-email").textContent = testData.email;
-    document.getElementById("user-credits-total").textContent = testData.credits;
+        const data = await response.json();
+        if (!data.valid) {
+            window.location.href = "../signin.html";
+        } else {
+            const user = data.user;
+            document.getElementById("user-name").textContent = user.name;
+            document.getElementById("user-phone").textContent = user.phoneNumber;
+            document.getElementById("user-address").textContent = user.address;
+            document.getElementById("user-email").textContent = user.email;
+            document.getElementById("user-credits-total").textContent = user.credits;
 
+            const creditsList = document.getElementById("user-credits");
+            user.itemsSold.forEach(item => {
+                const listItem = document.createElement("li");
+                listItem.textContent = item;
+                creditsList.appendChild(listItem);
+            });
+        }
+    }
 
-    // Populate credits list
-    const creditsList = document.getElementById("user-credits");
-    testData.itemsSold.forEach(item => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${item}`;
-        creditsList.appendChild(listItem);
-    });
+    function getCookie(name) {
+        const cookieName = `${name}=`;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith(cookieName)) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        return null;
+    }
+
+    window.onload = checkLoggedIn;
 
     function calculateCredits() {
-        const category = document.getElementById('category').value.toLowerCase(); // Convert to lowercase
+        const category = document.getElementById('category').value.toLowerCase();
         const model = document.getElementById('model').value;
 
         var credits = 0;

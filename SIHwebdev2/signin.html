@@ -263,23 +263,40 @@
 
         const response = await fetch("http://localhost:3000/api/signup", {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify({
                 name,
                 email,
                 password,
             }),
-            headers: {
-                "Content-Type": "application/json",
-            },
         });
 
         const data = await response.json();
         if (response.status === 200) {
-            // Sign-up successful, store _id in a cookie
-            alert("Sign-up successful!");
+            const loginResponse = await fetch("http://localhost:3000/api/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
 
-            // After successful signup, automatically perform a login
-            login(email, password);
+            const loginData = await loginResponse.json();
+            if (loginResponse.status === 200) {
+                // Login successful, store _id in a cookie
+                document.cookie = `_id=${loginData.token}`;
+                alert("Login successful!");
+
+                // Redirect to the dashboard after successful login
+                window.location.href = "./dashboard/index.html";
+            } else {
+                alert("Login failed. Please check your credentials.");
+            }
         } else {
             alert("Sign-up failed. Please try again.");
         }
@@ -289,7 +306,11 @@
     }
 
     // Function to send a POST request to the login API
-    async function login(email, password) {
+    async function login() {
+        const loginForm = document.getElementById("login-form");
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
         const response = await fetch("http://localhost:3000/api/signin", {
             method: "POST",
             headers: {
@@ -303,27 +324,34 @@
 
         const data = await response.json();
         if (response.status === 200) {
-            // Login successful, store the token in a cookie
-            document.cookie = `token=${data.token}`;
+            // Login successful, store _id in a cookie
+            document.cookie = `_id=${data.token}`;
             alert("Login successful!");
+
+            // Redirect to the dashboard after successful login
+            window.location.href = "./dashboard/index.html";
         } else {
             alert("Login failed. Please check your credentials.");
         }
 
-        // Clear the login form if needed
-        const loginForm = document.getElementById("login-form");
-        if (loginForm) {
-            loginForm.reset();
-        }
+        // Clear the form
+        loginForm.reset();
     }
 
-    // Add event listener to the sign-up form
+    // Add event listeners to the sign-up and login forms
     const signupButton = document.getElementById("signup-button");
+    const loginButton = document.getElementById("login-button");
 
     signupButton.addEventListener("click", function (e) {
         e.preventDefault();
         signUp();
     });
+
+    loginButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        login();
+    });
 </script>
+
 
 </html>
