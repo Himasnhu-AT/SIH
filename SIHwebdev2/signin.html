@@ -250,14 +250,13 @@
     <div class="main">
         <input type="checkbox" id="chk" aria-hidden="true">
         <div class="signup">
-            <form>
+            <form id="signup-form">
                 <label for="chk" aria-hidden="true">Sign Up</label>
                 <select id="user-type" class="usertype">
                     <option value="user">User</option>
                     <option value="company">Company</option>
-                    <option value="company">Pick Up Man</option>
+                    <option value="pickupman">Pick Up Man</option>
                 </select>
-
                 <input type="text" id="signup-username" name="txt" placeholder="User name" required="">
                 <input type="email" id="signup-email" name="email" placeholder="Email" required="">
                 <input type="password" id="signup-password" name="pswd" placeholder="Password" required="">
@@ -265,13 +264,8 @@
             </form>
         </div>
         <div class="login">
-            <form>
+            <form id="login-form">
                 <label for="chk" aria-hidden="true">Login</label>
-                <!-- <select id="user-type" class="usertype">
-                    <option value="user">User</option>
-                    <option value="company">Company</option>
-                    <option value="company">Pick Up Man</option>
-                </select> -->
                 <input type="email" id="login-email" name="email" placeholder="Email" required="">
                 <input type="password" id="login-password" name="pswd" placeholder="Password" required="">
                 <button id="login-button">Login</button>
@@ -279,24 +273,10 @@
         </div>
     </div>
 </body>
-
 <script>
-    try {
-        window.onload = checkToken();
-        function checkToken() {
-            const token = getCookie("_id");
-            console.log(token);
-            if (token) {
-                window.location.href = "./dashboard/dashboard.html";
-                return;
-            }
-        }
-    } catch (err) {
-        console.log("No cookie found")
-    };
     // Function to send a POST request to the sign-up API
     async function signUp() {
-        const signupForm = document.getElementById("signup-form");
+        const type = document.getElementById("user-type").value;
         const name = document.getElementById("signup-username").value;
         const email = document.getElementById("signup-email").value;
         const password = document.getElementById("signup-password").value;
@@ -307,6 +287,7 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                type, // Add user type to the request
                 name,
                 email,
                 password,
@@ -332,8 +313,12 @@
                 document.cookie = `_id=${loginData.token}`;
                 alert("Login successful!");
 
-                // Redirect to the dashboard after successful login
-                window.location.href = "./dashboard/dashboard.html";
+                // Redirect to the appropriate dashboard based on user type
+                if (type === "company") {
+                    window.location.href = "./dashboard_facility/dashboard_facility.html";
+                } else {
+                    window.location.href = "./dashboard/dashboard.html";
+                }
             } else {
                 alert("Login failed. Please check your credentials.");
             }
@@ -347,7 +332,6 @@
 
     // Function to send a POST request to the login API
     async function login() {
-        const loginForm = document.getElementById("login-form");
         const email = document.getElementById("login-email").value;
         const password = document.getElementById("login-password").value;
 
@@ -368,8 +352,12 @@
             document.cookie = `_id=${data.token}`;
             alert("Login successful!");
 
-            // Redirect to the dashboard after successful login
-            window.location.href = "./dashboard/dashboard.html";
+            // Redirect to the appropriate dashboard based on user type
+            if (data.type === "company") {
+                window.location.href = "./dashboard_facility/dashboard_facility.html";
+            } else {
+                window.location.href = "./dashboard/dashboard.html";
+            }
         } else {
             alert("Login failed. Please check your credentials.");
         }
@@ -378,7 +366,7 @@
         loginForm.reset();
     }
 
-    // Add event listeners to the sign-up and login forms
+    // Add event listeners to the sign-up and login buttons
     const signupButton = document.getElementById("signup-button");
     const loginButton = document.getElementById("login-button");
 
@@ -391,6 +379,7 @@
         e.preventDefault();
         login();
     });
+
 
 
 </script>
