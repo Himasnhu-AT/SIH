@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const SoldItem = require("../models/soldItem");
+const SoldItem = require("../models/solditem");
 
 router.get("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
-    
+
     const soldItems = await SoldItem.find({ userId });
     res.json(soldItems);
   } catch (error) {
@@ -16,12 +16,12 @@ router.get("/:userId", async (req, res) => {
 
 router.post("/add", async (req, res) => {
   try {
-    const { name, credit, userId } = req.body;
-    
-    const newSoldItem = new SoldItem({ name, credit, userId, model });
-    
+    const { name, credit, userId , model, Ewaste } = req.body;
+
+    const newSoldItem = new SoldItem({ name, credit, userId , model, Ewaste });
+
     await newSoldItem.save();
-    
+
     res.status(201).json(newSoldItem);
   } catch (error) {
     console.error(error);
