@@ -9,7 +9,7 @@ Example: localhost:3000/api/solditems/add
   "Ewaste": ":id",
   "model": "Iphone 12",
 }
-```ß
+```
 
 OUTPUT:
 ```json
