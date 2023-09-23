@@ -13,7 +13,7 @@ const corsOptions = {
 // IMPORTS FROM OTHER FILES
 const authRouter = require("./routes/auth");
 const ewasteFacilityRouter = require("./routes/ewaste_facility");
-const soldItemRouter = require("./routes/solditem");
+const soldItemRouter = require("./routes/SoldItem.js");
 const pickupRouter = require("./routes/pickup");
 
 
