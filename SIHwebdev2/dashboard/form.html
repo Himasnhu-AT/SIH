@@ -182,7 +182,7 @@
             </div>
           </div>
           <div class="col-auto">
-            <button onclick=AddSoldItem() class="btn btn-success">Submit</button>
+            <button onclick="AddSoldItem();" class="btn btn-success">Submit</button>
           </div>
         </form>
       </div>
@@ -204,17 +204,20 @@
     return null; // Cookie not found
   }
 
-  const userId = getCookie("userId"); // Corrected the cookie name to "userId"
+  const userId = getCookie("userId");
+  const token = getCookie("_id"); // Corrected the cookie name to "userId"
   console.log(userId);
+  console.log(token);
   console.log(credit);
 
   const name = "user";
   const Ewaste = "vjhv";
 
   async function AddSoldItem() {
+    event.preventDefault();
     const model = document.getElementById("modelno").value;
 
-    const res = await fetch("http://localhost:3000/soldItems/add", {
+    const res = await fetch("http://localhost:3000/api/solditems/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -229,8 +232,9 @@
     });
 
     console.log(await res.json());
-    alert(res.status)
-    window.location.href = "./dashboard/dashboard.html";
+
+    alert(res.status);
+    window.location.href = 'dashboard.html';
   }
 </script>
 
