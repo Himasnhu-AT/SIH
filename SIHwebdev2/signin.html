@@ -311,6 +311,17 @@
             if (loginResponse.status === 200) {
                 // Login successful, store _id in a cookie
                 document.cookie = `_id=${loginData.token}`;
+                document.cookie = `userId=${loginData._id}`;
+                const cookies = document.cookie.split("; ");
+                const cookieMap = {};
+                cookies.forEach(cookie => {
+                    const [name, value] = cookie.split("=");
+                    cookieMap[name] = value;
+                });
+
+                const userId = cookieMap["userId"];
+                console.log(userId);
+
                 alert("Login successful!");
 
                 // Redirect to the appropriate dashboard based on user type

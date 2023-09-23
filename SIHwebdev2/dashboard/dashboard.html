@@ -225,6 +225,8 @@
             document.getElementById("user-phone").textContent = user.phoneNumber;
             document.getElementById("user-address").textContent = user.address;
             document.getElementById("user-email").textContent = user.email;
+            const _id = user._id;
+
             // document.getElementById("user-credits-total").textContent = user.credits;
 
             const dynamicFieldsContainer = document.getElementById('user-credits');
@@ -232,7 +234,14 @@
             // Function to fetch data from the API
             async function fetchData() {
                 try {
-                    const response = await fetch('http://localhost:3000/api/solditems/650234dfae5ea437c88813b4');
+                    const response = await fetch('http://localhost:3000/api/solditems/find', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'userId': _id,
+                        },
+                    }
+                    );
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                         alert("Error");

@@ -189,14 +189,31 @@
     </div>
   </div>
   <script>
-    function AddSoldItem() {
-      const modelno = document.getElementById("modelno").value;
-      const credit = 35;
-      // const userId = Cookies.get("_Id");
-      userId = "650234dfae5ea437c88813b4";
-      const name = "user";
+    const credit = 35;
 
-      const res = fetch("http://localhost:3000/soldItems/add", {
+    // Function to get the value of a cookie by its name
+    function getCookie(cookieName) {
+      const cookies = document.cookie.split("; ");
+      for (const cookie of cookies) {
+        const [name, value] = cookie.split("=");
+        if (name === cookieName) {
+          return value;
+        }
+      }
+      return null; // Cookie not found
+    }
+
+    const userId = getCookie("userId"); // Corrected the cookie name to "userId"
+    console.log(userId);
+    console.log(credit);
+
+    const name = "user";
+    const Ewaste = "vjhv";
+
+    async function AddSoldItem() {
+      const model = document.getElementById("modelno").value;
+
+      const res = await fetch("http://localhost:3000/soldItems/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -206,14 +223,16 @@
           credit,
           userId,
           name,
+          Ewaste,
         }),
       });
-      console.log(res);
 
+      console.log(await res.json());
+      alert(res.status)
       window.location.href = "./dashboard/dashboard.html";
     }
-
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
