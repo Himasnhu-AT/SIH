@@ -134,7 +134,7 @@
     async function fetchData() {
         try {
             // Fetch user information from your API
-            const userDataResponse = await fetch("http://localhost:3000/api/ewaste_facilities/650624fc779d954c68b9a479", {
+            const userDataResponse = await fetch("http://localhost:3000/api/ewaste_facilities/650e82a3655a35dffb2a5446", {
                 method: "GET",
                 // Add headers if needed
             });
@@ -154,7 +154,7 @@
             const soldItemsResponse = await fetch("http://localhost:3000/api/solditems/find", {
                 method: "GET",
                 headers: {
-                    "Ewaste": "548i" // Set the 'Ewaste' header
+                    "Ewaste": ":id" // Set the 'Ewaste' header
                 }
             });
 

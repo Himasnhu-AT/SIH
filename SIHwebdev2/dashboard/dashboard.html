@@ -107,7 +107,7 @@
                     <img src="user.png" id="user-img" alt="">Hello, <span id="user-name">User</span>!
                 </div>
                 <button id="info-btn">Edit Profile</button>
-                <button id="Submit">Submit</button>
+                <button id="Submit" onclick="updateProfile()">Submit</button>
                 <div class="line"></div>
                 <div class="personal">
                     <div id="ph-no"><img src="phone.gif" class="icons" alt=""><b>Contact</b>: <span
@@ -222,7 +222,7 @@
         } else {
             const user = data.user;
             document.getElementById("user-name").textContent = user.name;
-            document.getElementById("user-phone").textContent = user.phoneNumber;
+            document.getElementById("user-phone").textContent = user.contact;
             document.getElementById("user-address").textContent = user.address;
             document.getElementById("user-email").textContent = user.email;
             const _id = user._id;
@@ -392,6 +392,53 @@
         // Append the new list item to the user-credits
         const userCredits = document.getElementById('user-credits');
         userCredits.appendChild(listItem);
+    }
+
+    async function updateProfile() {
+        const newPhoneNumber = document.getElementById('new-ph-no');
+        const newAddress = document.getElementById('new-address');
+        const newEmail = document.getElementById('new-email');
+
+        const token = getCookie("_id");
+        if (!token) {
+            window.location.href = "../signin.html";
+            return;
+        }
+
+        console.log("Updating profile...");
+        console.log("New phone number:", newPhoneNumber);
+        console.log("New address:", newAddress);
+        console.log("New email:", newEmail);
+        console.log("Token:", token);
+
+        try {
+            const response = await fetch("http://localhost:3000/update", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-auth-token": token,
+                },
+                body: JSON.stringify({
+                    email: newEmail.value,
+                    address: newAddress.value,
+                    contact: newPhoneNumber.value
+                })
+            });
+
+            if (response.ok) {
+                alert("Profile updated successfully");
+                // write command to reload window
+                window.location.reload();
+
+            } else {
+                const errorData = await response.json();
+                console.error("Error updating profile:", errorData.error);
+                alert("Error updating profile");
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Error updating profile");
+        }
     }
 
 
