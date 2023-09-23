@@ -257,6 +257,15 @@
                         credit = credit + item.credit;
                     });
 
+                    const testname = "Iphone 12";
+                    testcredit = 50;
+                    const fieldElement = document.createElement('div');
+                    fieldElement.classList.add('dashboard-item');
+                    fieldElement.innerHTML += `<p>Name: ${testname} - Credit: ${testcredit}</p>`;
+                    dynamicFieldsContainer.appendChild(fieldElement);
+                    credit = credit + testcredit;
+
+
                     // Update the total credits display
                     document.getElementById("user-credits-total").textContent = credit;
 
