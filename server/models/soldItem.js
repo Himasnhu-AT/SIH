@@ -13,6 +13,14 @@ const soldItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  model: {
+    type: String,
+    required: true,
+  },
+  Ewaste: {
+    type: String,
+    required: true,
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Reference the User model

@@ -5,7 +5,9 @@ Example: localhost:3000/api/solditems/add
 {
   "name": "Iphone 12",
   "credit": 100,
-  "userId": "650234dfae5ea437c88813b4"
+  "userId": "650234dfae5ea437c88813b4",
+  "Ewaste": ":id",
+  "model": "Iphone 12",
 }
 ```
 
@@ -17,6 +19,8 @@ OUTPUT:
   "credit": 100,
   "userId": "650234dfae5ea437c88813b4",
   "soldOn": "2023-09-21T23:26:32.816Z",
+  "Ewaste": ":id",
+  "model": "Iphone 12",
   "__v": 0
 }
 ```

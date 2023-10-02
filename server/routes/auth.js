@@ -75,6 +75,23 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+authRouter.post("/update", auth, async (req, res) => {
+  try {
+    const userId = req.user;
+    const { contact, address, email } = req.body;
+
+    const user = await User.findByIdAndUpdate(userId, { email, contact, address }, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json({ msg: "User data updated successfully", user });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
 
 // get user data
 authRouter.get("/", auth, async (req, res) => {

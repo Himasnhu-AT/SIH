@@ -30,7 +30,7 @@
 
         .main {
             width: 350px;
-            height: 500px;
+            height: 550px;
             background: red;
             overflow: hidden;
             background: url("website\assets\81atnBsOVZL.png") no-repeat center /cover;
@@ -50,7 +50,7 @@
         }
 
         label {
-            color: #13cf3b;
+            color: rgba(181, 223, 55, 1);
             font-size: 2.3em;
             justify-content: center;
             display: flex;
@@ -64,10 +64,11 @@
             color: white;
         }
 
-        .main input {
+        .main input,
+        .main select {
             width: 60%;
-            height: 20px;
-            background: #13cf3b;
+
+            background: rgba(181, 223, 55, 1);
             color: white;
 
             justify-content: center;
@@ -86,7 +87,7 @@
             justify-content: center;
             display: block;
             color: #fff;
-            background: #13cf3b;
+            background: rgba(181, 223, 55, 1);
             font-size: 1em;
             font-weight: bold;
             margin-top: 20px;
@@ -98,13 +99,13 @@
         }
 
         .main button:hover {
-            background: #38e75e;
+            background: rgba(181, 223, 55, 1);
             color: white;
         }
 
         .login {
             height: 460px;
-            background: #13cf3b;
+            background: rgba(181, 223, 55, 1);
             border-radius: 60% / 10%;
             transform: translateY(-180px);
             transition: .8s ease-in-out;
@@ -116,13 +117,14 @@
         }
 
         .login ::placeholder {
-            color: #13cf3b;
+            color: rgba(181, 223, 55, 1);
         }
 
         .login input,
-        .login button {
+        .login button,
+        .login select {
             background-color: #fff;
-            color: #13cf3b;
+            color: rgba(181, 223, 55, 1);
 
         }
 
@@ -140,9 +142,23 @@
 
         .navbar {
             position: absolute;
-            top: -7px;
+            top: 0;
             width: 100%;
             left: 0;
+        }
+
+        .usertype {
+            width: 60%;
+            background: rgba(181, 223, 55, 1);
+            color: white;
+
+            justify-content: center;
+            display: flex;
+            margin: 20px auto;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -161,10 +177,10 @@
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active ps-3" aria-current="page" href="index.html">Home</a>
+                            <a class="nav-link ps-3" aria-current="page" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ps-4" href="#">About Us</a>
+                            <a class="nav-link ps-4" href="about-us.html">About Us</a>
                         </li>
                         <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle ps-4" href="#" role="button" data-bs-toggle="dropdown"
@@ -217,10 +233,10 @@
                             </ul>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link ps-4" href="#">Contact Us</a>
+                            <a class="nav-link ps-4" href="map.html">Track Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ps-4" href="signin.html">Sign In</a>
+                            <a class="nav-link active ps-4" href="signin.html">Sign In</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
@@ -234,8 +250,13 @@
     <div class="main">
         <input type="checkbox" id="chk" aria-hidden="true">
         <div class="signup">
-            <form>
+            <form id="signup-form">
                 <label for="chk" aria-hidden="true">Sign Up</label>
+                <select id="user-type" class="usertype">
+                    <option value="user">User</option>
+                    <option value="company">Company</option>
+                    <option value="pickupman">Pick Up Man</option>
+                </select>
                 <input type="text" id="signup-username" name="txt" placeholder="User name" required="">
                 <input type="email" id="signup-email" name="email" placeholder="Email" required="">
                 <input type="password" id="signup-password" name="pswd" placeholder="Password" required="">
@@ -243,7 +264,7 @@
             </form>
         </div>
         <div class="login">
-            <form>
+            <form id="login-form">
                 <label for="chk" aria-hidden="true">Login</label>
                 <input type="email" id="login-email" name="email" placeholder="Email" required="">
                 <input type="password" id="login-password" name="pswd" placeholder="Password" required="">
@@ -252,21 +273,21 @@
         </div>
     </div>
 </body>
-
 <script>
     // Function to send a POST request to the sign-up API
     async function signUp() {
-        const signupForm = document.getElementById("signup-form");
+        const type = document.getElementById("user-type").value;
         const name = document.getElementById("signup-username").value;
         const email = document.getElementById("signup-email").value;
         const password = document.getElementById("signup-password").value;
 
-        const response = await fetch("http://localhost:3000/api/signup", {
+        const response = await fetch("https://sih-e-waste-facility-locator.onrender.com/api/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                type, // Add user type to the request
                 name,
                 email,
                 password,
@@ -275,7 +296,7 @@
 
         const data = await response.json();
         if (response.status === 200) {
-            const loginResponse = await fetch("http://localhost:3000/api/signin", {
+            const loginResponse = await fetch("https://sih-e-waste-facility-locator.onrender.com/api/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -290,10 +311,28 @@
             if (loginResponse.status === 200) {
                 // Login successful, store _id in a cookie
                 document.cookie = `_id=${loginData.token}`;
+                document.cookie = `userId=${loginData._id}`;
+                const cookies = document.cookie.split("; ");
+                const cookieMap = {};
+                cookies.forEach(cookie => {
+                    const [name, value] = cookie.split("=");
+                    cookieMap[name] = value;
+                });
+
+                const userId = cookieMap["userId"];
+                console.log(userId);
+
                 alert("Login successful!");
 
-                // Redirect to the dashboard after successful login
-                window.location.href = "./dashboard/dashboard.html";
+                // Redirect to the appropriate dashboard based on user type
+                if (type === "company") {
+                    window.location.href = "./dashboard_facility/dashboard_facility.html";
+                } else if (type == "pickupman") {
+                    alert("Not implemented");
+
+                } else {
+                    window.location.href = "./dashboard/dashboard.html";
+                }
             } else {
                 alert("Login failed. Please check your credentials.");
             }
@@ -307,11 +346,10 @@
 
     // Function to send a POST request to the login API
     async function login() {
-        const loginForm = document.getElementById("login-form");
         const email = document.getElementById("login-email").value;
         const password = document.getElementById("login-password").value;
 
-        const response = await fetch("http://localhost:3000/api/signin", {
+        const response = await fetch("https://sih-e-waste-facility-locator.onrender.com/api/signin", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -328,8 +366,12 @@
             document.cookie = `_id=${data.token}`;
             alert("Login successful!");
 
-            // Redirect to the dashboard after successful login
-            window.location.href = "./dashboard/dashboard.html";
+            // Redirect to the appropriate dashboard based on user type
+            if (data.type === "company") {
+                window.location.href = "./dashboard_facility/dashboard_facility.html";
+            } else {
+                window.location.href = "./dashboard/dashboard.html";
+            }
         } else {
             alert("Login failed. Please check your credentials.");
         }
@@ -338,7 +380,7 @@
         loginForm.reset();
     }
 
-    // Add event listeners to the sign-up and login forms
+    // Add event listeners to the sign-up and login buttons
     const signupButton = document.getElementById("signup-button");
     const loginButton = document.getElementById("login-button");
 
@@ -351,7 +393,14 @@
         e.preventDefault();
         login();
     });
-</script>
 
+
+
+</script>
+<script type="text/javascript" src="dist/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<script src="bootstrap.js"></script>
 
 </html>

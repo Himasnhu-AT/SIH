@@ -63,10 +63,14 @@ body{
     width: 13%;
     margin: 0px 4px;
 }
-#info-btn{
+#info-btn ,#Submit{
     width: 80%;
     margin: 0px auto;
     border-radius: 8px;
+    cursor: pointer;
+}
+#Submit{
+    display: none;
 }
 .icons{
     height: 30px;
@@ -101,4 +105,29 @@ b{
 #form input,select{
     font-size: 20px;
     height: 40%;
+}
+.maps{
+    align-items: center;
+}
+.personal-edit{
+    display: none;
+}
+.personal-edit div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.personal-edit div input{
+    height: 24px;
+    border-radius: 5px;
+}
+#new-ph-no::-webkit-outer-spin-button,
+#new-ph-no::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#new-ph-no {
+  -moz-appearance: textfield;
 }
