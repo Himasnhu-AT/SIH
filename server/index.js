@@ -4,7 +4,7 @@ const cors = require("cors");
 
 // CORS Config
 const corsOptions = {
-  origin: 'http://127.0.0.1:5500', // Specify your frontend origin
+  origin: ['http://127.0.0.1:5500', 'https://e-waste-facilitylocator.netlify.app'], // Specify your allowed frontend origins as an array
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
