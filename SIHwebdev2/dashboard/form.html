@@ -217,7 +217,7 @@
     event.preventDefault();
     const model = document.getElementById("modelno").value;
 
-    const res = await fetch("http://localhost:3000/api/solditems/add", {
+    const res = await fetch("https://sih-e-waste-facility-locator.onrender.com/api/solditems/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

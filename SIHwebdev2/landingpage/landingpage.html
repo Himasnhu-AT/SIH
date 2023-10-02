@@ -134,7 +134,7 @@
     async function fetchData() {
         try {
             // Fetch user information from your API
-            const userDataResponse = await fetch("http://localhost:3000/api/ewaste_facilities/650e82a3655a35dffb2a5446", {
+            const userDataResponse = await fetch("https://sih-e-waste-facility-locator.onrender.com/api/ewaste_facilities/650e82a3655a35dffb2a5446", {
                 method: "GET",
                 // Add headers if needed
             });
@@ -151,7 +151,7 @@
             document.getElementById("address").textContent = userData.location;
 
             // Fetch data from the API with the 'Ewaste' header
-            const soldItemsResponse = await fetch("http://localhost:3000/api/solditems/find", {
+            const soldItemsResponse = await fetch("https://sih-e-waste-facility-locator.onrender.com/api/solditems/find", {
                 method: "GET",
                 headers: {
                     "Ewaste": ":id" // Set the 'Ewaste' header
